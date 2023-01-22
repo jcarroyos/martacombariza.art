@@ -1,0 +1,42 @@
+{% include theme_path ~ "/templates/header.html.twig" %}
+
+{% if contact_layout == 'layout1' %}
+    <div class="section-empty">
+        <div class="google-map" data-address="{{contact_address}}" data-skin="gray" data-zoom="15" data-marker-pos-top="50" data-marker="{{theme_path}}/images/marker.png"></div>
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-6 contact-form">
+                         <h3>{{'SEND A MESSAGGE'|t}}</h3>
+                          {{ page.content }}
+                </div>
+                <div class="col-md-6">
+                    {{ page.content_contact }}
+                </div>
+                <hr class="space" />
+                <div class="col-md-12 text-center">
+                    {{page.section}}
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+        <div class="section-two-blocks">
+        <div class="row vertical-row">
+            <div class="col-md-6">
+                <div class="google-map full-screen-size" data-sub-height="138" data-skin="gray" data-marker-pos-top="50" data-address="{{contact_address}}" data-marker="{{theme_path}}/images/marker.png"></div>
+            </div>
+            <div class="col-md-6 contact-form">
+                <div class="content">
+                    <div class="title-base title-small text-left" data-anima="show-scale" data-trigger="hover">
+                        <h2>{{title}}</h2>
+                        <hr class="anima" />
+                    </div>
+                    
+                    {{page.content}}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% include theme_path ~ "/templates/footer.html.twig" %}
+        

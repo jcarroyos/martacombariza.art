@@ -1,0 +1,339 @@
+<?php
+
+function saha_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+    if ($node = \Drupal::routeMatch()->getParameter('node')) {
+        $suggestions[] = 'page__node__' . $node->getType();
+    }
+}
+
+function saha_preprocess(&$variables){
+     global $base_root, $base_url;
+
+    if (isset($_GET['style'])) {
+        $variables['por_style'] = $_GET['style'];
+    } elseif (!empty(theme_get_setting('portfolio_style', 'saha'))) {
+        $variables['por_style'] = theme_get_setting('portfolio_style', 'saha');
+    } else {
+        $variables['por_style'] = 'portfolio1';
+    }
+
+    if (isset($_GET['layout'])) {
+        $variables['por_layout'] = $_GET['layout'];
+    } elseif (!empty(theme_get_setting('portfolio_layout', 'saha'))) {
+        $variables['por_layout'] = theme_get_setting('portfolio_layout', 'saha');
+    } else {
+        $variables['por_layout'] = 'full_width';
+    }
+
+    if (isset($_GET['sidebar'])) {
+        $variables['blog_sidebar'] = $_GET['sidebar'];
+    } elseif (!empty(theme_get_setting('blog_sidebar', 'saha'))) {
+        $variables['blog_sidebar'] = theme_get_setting('blog_sidebar', 'saha');
+    } else {
+        $variables['blog_sidebar'] = 'full';
+    }
+
+
+
+}
+function saha_preprocess_block(&$variables) {
+    
+    global $base_url;
+
+    switch ($variables['base_plugin_id']) {
+        case 'system_branding_block':
+            $variables['site_logo'] = '';
+            if ($variables['content']['site_logo']['#access'] && $variables['content']['site_logo']['#uri']) {
+                $variables['site_logo'] = str_replace('.svg', '.png', $variables['content']['site_logo']['#uri']);
+            }
+            break;
+    }
+
+
+    if (isset($variables['elements']['#id']) && !empty($variables['elements']['#id'])) {
+        $block_id = $variables['elements']['#id'];
+        $block = \Drupal\block\Entity\Block::load($block_id);
+        if ($block->getRegion()) {
+            $region = $block->getRegion();
+            $variables['region'] = $region;
+        }
+        //config as context module
+    } else {
+        $variables['region'] = $variables['elements']['#configuration']['region'];
+    }
+
+ 
+  $blocks_name = array();
+    $arr_block = array();
+    $blocks_name = \Drupal::entityManager()->getStorage('block')->loadByProperties(['region' => 'contact_info', 'theme' => \Drupal::theme()->getActiveTheme()->getName()]);
+    foreach ($blocks_name as $k => $v) {
+        $block = \Drupal\block\Entity\Block::load($k);
+        $arr_block[$k] = (\Drupal::entityManager()->getViewBuilder('block')->view($block));
+//print render($arr_block[$k]);
+    }
+    if (isset($arr_block) && !empty($arr_block)) {
+        $variables['contact_info'] = $arr_block;
+    }
+    
+}
+
+
+function saha_preprocess_node(&$variables) {
+
+    global $base_root;
+    
+    $variables['base_root'] = $base_root;
+    $ntype = $variables['node']->getType();
+
+
+    $site_name = \Drupal::config('system.site')->get('name');
+    $variables['site_name'] = $site_name;
+    $request = \Drupal::request();
+
+    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+        $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+    }
+
+/////////////////////////////////////////////////////////
+
+     if ($ntype == 'portfolios') {
+        $created_time = $variables['node']->changed->value;
+        $link_next_por = generateNextPrevious('next', $created_time, 'portfolios');
+        $link_prev_por = generateNextPrevious('prev', $created_time, 'portfolios');
+        
+        if (!empty($link_prev_por)){
+              $variables['prev_por'] = '<div class="icon-box" data-anima="scale-up" data-trigger="hover">
+                                        <i class="fa fa-arrow-left text-m"></i>
+                                        <label class="text-s"><a href="'.$link_prev_por.'">PREVIOUS</a></label>
+                                    </div>'; 
+                                }else{
+                                    $variables['prev_por']='';
+                                }
+
+     
+        if(!empty($link_next_por)){
+             $variables['next_por'] = ' <div class="icon-box icon-box-right" style="float:right" data-anima="scale-up" data-trigger="hover">
+                                        <label class="text-s"><a href="'.$link_next_por.'">NEXT</a></label>
+                                        <i class="fa fa-arrow-right text-m"></i>
+                                    </div>';
+                                }else{
+                                     $variables['next_por'] ='';
+                                }
+       
+    }
+
+///////////////////////////////////////////////////////////////////////
+
+    //get current term (tid)
+    if (\Drupal::routeMatch()->getRouteName() == 'entity.taxonomy_term.canonical') {
+        $term_id = \Drupal::routeMatch()->getRawParameter('taxonomy_term');
+        $term = taxonomy_term_load($term_id);
+        //$term_name = $term_object->get('name')->value;
+        $variables['current_term'] = $term;
+    }
+
+if (is_string($variables['title'])){
+    $title =$variables['title'];
+}else{
+    $title ='';
+}
+
+    $post_url = $base_root.$variables['url'];
+    $variables['social_network_post'] = '
+        <div class="btn-group social-group">
+            <a target="_blank" href="http://www.facebook.com/sharer.php?u='.$post_url.'" data-social="share-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+                <i class="fa fa-facebook text-s circle"></i>
+            </a>
+            <a target="_blank" href="https://twitter.com/intent/tweet?original_referer='.$post_url.'&text='.t($title).'&tw_p=tweetbutton&url='.$post_url.'" data-social="share-twitter" data-toggle="tooltip" data-placement="top" title="Twitter">
+                <i class="fa fa-twitter text-s circle"></i>
+            </a>
+            <a target="_blank" href="https://plusone.google.com/_/+1/confirm?hl=en-US&url='.$post_url.'" data-social="share-google" data-toggle="tooltip" data-placement="top" title="Google+">
+                <i class="fa fa-google-plus text-s circle"></i>
+            </a>
+            <a target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&url='.$post_url.'&title='.t($title).'" data-social="share-linkedin" data-toggle="tooltip" data-placement="top" title="LinkedIn">
+                <i class="fa fa-linkedin text-s circle"></i>
+            </a>
+            </div>
+            ';
+
+}
+
+
+/**
+ * Implements template_preprocess_html().
+ */
+function saha_preprocess_html(&$variables) {
+
+    $theme = \Drupal::theme()->getActiveTheme()->getName();
+    $variables['attributes']['class'][] = 'ltr';
+    $variables['general_setting_tracking_code'] = theme_get_setting('general_setting_tracking_code', $theme);
+    $variables['custom_css'] = theme_get_setting('custom_css', $theme);
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+}
+
+
+/**
+ * Implements template_preprocess_page().
+ */
+function saha_preprocess_page(&$variables) {
+
+    global $base_root, $base_url;
+
+
+    $theme = \Drupal::theme()->getActiveTheme()->getName();
+    $variables['theme_path'] = drupal_get_path('theme', $theme);
+
+    $request = \Drupal::request();
+    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+        $variables['title'] = \Drupal::service('title_resolver')->getTitle($request, $route);
+    }
+        
+    //get current term (tid)
+    if (\Drupal::routeMatch()->getRouteName() == 'entity.taxonomy_term.canonical') {
+        $term_id = \Drupal::routeMatch()->getRawParameter('taxonomy_term');
+        $term = taxonomy_term_load($term_id);
+        //$term_name = $term_object->get('name')->value;
+        $variables['current_term'] = $term;
+    }
+
+    if ($node = \Drupal::routeMatch()->getParameter('node')) {
+        $variables['type'] = $node->getType();
+        if (isset($node->field_layout_full_page) && !empty($node->field_layout_full_page[0]->value)){
+            $full_page = $node->field_layout_full_page[0]->value;
+                if ($full_page){
+                    $variables['#attached']['library'][] = 'saha/saha-fullpage';
+                }
+            $variables['full_page'] = $full_page;
+
+        }
+        
+    }
+
+$variables['copyright_text'] = theme_get_setting('copyright_text','saha');
+$variables['contact_phone']  = theme_get_setting('contact_phone','saha');
+$variables['social_network'] = theme_get_setting('social_network','saha');
+
+if (isset($_GET['layout'])) {
+        $variables['contact_layout'] = $_GET['layout'];
+    } elseif (!empty(theme_get_setting('contact_layout', 'saha'))) {
+        $variables['contact_layout'] = theme_get_setting('contact_layout', 'saha');
+    } else {
+        $variables['contact_layout'] = 'layout1';
+    }
+    
+$variables['contact_address'] = theme_get_setting('contact_address','saha');
+
+$variables['por_subtitle'] = theme_get_setting('por_subtitle','saha');
+$variables['hide_blog_page_header'] = theme_get_setting('hide_blog_page_header','saha');
+$variables['blog_subtitle'] = theme_get_setting('blog_subtitle','saha');
+  $fid1 = theme_get_setting('page_header_bg_image', 'saha');
+       
+        if (!empty($fid1)) {
+            $file = file_load($fid1[0]);
+            $uri = $file->getFileUri();
+            $path1 = file_create_url($uri);
+            $variables['bg_image_path']= $path1;
+        }else{
+            $variables['bg_image_path'] = '';
+        }
+
+ $fid = theme_get_setting('por_page_header_bg_image', 'saha');
+       
+        if (!empty($fid)) {
+            $file = file_load($fid[0]);
+            $uri = $file->getFileUri();
+            $path = file_create_url($uri);
+            $variables['por_bg_image_path']= $path;
+        }else{
+            $variables['por_bg_image_path']= $variables['bg_image_path'];
+        }
+
+
+
+
+ $fid2 = theme_get_setting('blog_page_header_bg_image', 'saha');
+       
+        if (!empty($fid2)) {
+            $file = file_load($fid2[0]);
+            $uri = $file->getFileUri();
+            $path2 = file_create_url($uri);
+            $variables['blog_bg_image_path']= $path2;
+        }else{
+            $variables['blog_bg_image_path']= $variables['bg_image_path'];
+        }
+
+}
+
+
+function saha_form_search_block_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+    unset($form['search_block_form']['#title']); // remove label form
+    $form['keys']['#attributes']['placeholder'][] = 'Search for...';
+    $form['actions']['submit']['#value'] = t('Go!'); // Change the text on the submit button
+
+}
+
+
+/**
+ * Implements template_preprocess_container().
+ */
+function saha_preprocess_container(&$variables) {
+    $variables['container_type'] = $variables['element']['#type'];
+}
+
+
+
+function saha_preprocess_field(&$variables){
+
+    if ($node = \Drupal::routeMatch()->getParameter('node')) {
+        $variables['type'] = $node->getType();
+        if (isset($node->field_post_layout) && !empty($node->field_post_layout[0]->value)){
+            $variables['layout'] = $node->field_post_layout[0]->value;
+               
+        }
+        
+    }
+}
+
+function generateNextPrevious($direction = 'next', $created_time, $content_type) {
+
+    if ($direction === 'next') {
+        $comparison_opperator = '>';
+        $sort = 'ASC';
+        $display_text = t('<i class="fa fa-angle-right"></i><p>Next Project</p>');
+    } elseif ($direction === 'prev') {
+        $comparison_opperator = '<';
+        $sort = 'DESC';
+        $display_text = t('<i class="fa fa-angle-left"></i><p>Previous Project</p>');
+    }
+
+    //Lookup 1 node younger (or older) than the current node
+    $query = \Drupal::entityQuery('node');
+    $next = $query->condition('changed', $created_time, $comparison_opperator)
+            ->condition('type', $content_type)
+            ->condition('status', 1)
+            ->sort('changed', $sort)
+            ->range(0, 1)
+            ->execute();
+
+    //If this is not the youngest (or oldest) node
+    if (!empty($next) && is_array($next)) {
+        $next = array_values($next);
+        $next = $next[0];
+
+        //Find the alias of the next node
+        $next_url = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $next);
+       
+/**
+Note: In drupal version < 2.0 : $next_url = \Drupal\Core\Url::fromUserInput($next_url);
+                version >=2.0 : $next_url = \Drupal\Core\Url::fromUserInput($next_url)->toString();
+*/
+        $next_url = base_path().ltrim($next_url,'/');
+        //$next_url = \Drupal\Core\Url::fromUserInput($next_url)->toString();
+        //print $next_url;
+
+
+        return $next_url;
+    }
+}

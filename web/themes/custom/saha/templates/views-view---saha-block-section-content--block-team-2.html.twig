@@ -1,0 +1,16 @@
+ <div class="container content">
+    <div class="row">
+    	{% if header %}
+	        <div class="col-md-3">
+	        	{{ header }}
+	        </div>
+	    {% endif %}
+	    {% if rows %}
+	    	<div class="col-md-9">
+	    		<div class="row">
+	    			{{ rows }}
+	    		</div>
+	    	</div>
+	    {% endif %}
+    </div>
+</div>

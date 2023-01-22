@@ -1,0 +1,12 @@
+{% set imageURL = file_url(node.field_slider_image.0.entity.uri.value) %}
+{% set imageTitle = node.field_slider_image.0.title %}
+<li>
+	<div class="section-slide">
+     <div class="bg-cover" style="background-image:url('{{imageURL}}')"></div>
+        <div class="container">
+            <div class="pos-slider pos-bottom text-left">
+            <h1>{{imageTitle}}</h1>
+            </div>
+        </div>
+</div>
+</li>

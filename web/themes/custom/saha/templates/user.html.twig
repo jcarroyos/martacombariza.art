@@ -1,0 +1,6 @@
+
+<article class="simpnews-user-info">
+  {% if content %}
+  	{{content|without('orders','summary')}}
+  {% endif %}
+</article>

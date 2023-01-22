@@ -1,0 +1,32 @@
+<header data-menu-anima="fade-left">
+    <div class="navbar navbar-default over wide-area" role="navigation">
+        <div class="navbar navbar-main over">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    {% if page.logo %}
+                        {{page.logo}}
+                    {% endif %}
+                </div>
+                <div class="collapse navbar-collapse">
+                    {% if page.main_menu %}
+                        {{ page.main_menu }}
+                    {% endif %}
+                    <div class="nav navbar-nav navbar-right">
+                        <div class="navbar-left custom-area">
+                            {{contact_phone|t}}
+                        </div>
+                        <div class="btn-group navbar-left navbar-social">
+                            <div class="btn-group social-group">
+                                {{social_network|t}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

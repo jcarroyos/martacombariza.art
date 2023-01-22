@@ -1,0 +1,24 @@
+{% include theme_path ~ "/templates/header.html.twig" %}
+{% if show_page_header  %}
+{% else %}
+	<div class="header-title white ken-burn" data-parallax="scroll" data-position="top" data-natural-height="550" data-natural-width="1366" data-image-src="{{por_bg_image_path}}">
+	   <div class="container">
+	      <div class="title-base">
+	         <hr class="anima" />
+	         <h1>{{ title }}</h1>
+	         <p>{{por_subtitle}}</p>
+	      </div>
+	   </div>
+	</div>
+{% endif %}
+
+    {% if page.content %}
+        {{ page.content }}
+    {% endif %}
+    
+    {% if page.section %}
+        {{ page.section }}
+    {% endif %}
+    
+{% include theme_path ~ "/templates/footer.html.twig" %}
+        

@@ -1,0 +1,20 @@
+{% set show_page_header = node.field_hide_page_header.0.value %}
+{% set subtitle = node.field_subtitle.0.value %}
+{% if node.field_page_header_image.0.entity.uri.value %}
+	{% set imageURL = file_url(node.field_page_header_image.0.entity.uri.value) %}
+{% else %}
+	{% set imageURL = bg_image_path %}
+{% endif %}
+
+{% if show_page_header  %}
+{% else %}
+	<div class="header-title white ken-burn" data-parallax="scroll" data-position="top" data-natural-height="550" data-natural-width="1366" data-image-src="{{imageURL}}">
+	   <div class="container">
+	      <div class="title-base">
+	         <hr class="anima" />
+	         <h1>{{ title }}</h1>
+	         <p>{{subtitle}}</p>
+	      </div>
+	   </div>
+	</div>
+{% endif %}

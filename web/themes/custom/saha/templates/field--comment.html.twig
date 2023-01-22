@@ -1,0 +1,17 @@
+
+        <!-- Comments -->
+        <div class="comments-sec t-pad30">
+           <ol class="commentlist">
+              {{ comments }}
+           </ol>
+        </div>
+        <!-- /comments -->
+{% if comment_form %}
+        <!-- post comments -->
+        <div class="comment-form-wrapper">
+           <h3 class="fw600">{{'Post your comments here'|t}}</h3>
+           
+            {{ comment_form }}
+        </div>
+        <!-- /post comments -->
+ {% endif %}

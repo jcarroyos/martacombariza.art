@@ -1,0 +1,42 @@
+
+{% if layout == 'style1' %}
+	<!--COMMENT BOX-->
+	{% if comment_form %}
+		<div class="form-box">
+		   <h5>LEAVE A COMMENT</h5>
+		    {{ comment_form }}
+		</div>
+	 {% endif %}
+	<hr class="space s" />
+	<hr />
+	<hr class="space s" />
+	<div class="comment-list comment-style1">
+	   <h5>POST COMMENTS</h5>
+	    {{ comments }}
+	</div>	
+{% else %}
+
+	      
+	         <div class="col-md-6">
+	            <div class="comment-list">
+	               <h5>POST COMMENTS</h5>
+	                {{ comments }}
+	            </div>
+	         </div>
+
+	         {% if comment_form %}
+		         <div class="col-md-6">
+		            <div class="form-box">
+		            	<div class="col-md-12">
+		            		<div class="row">
+				               <h5>LEAVE A COMMENT</h5>
+				               <hr class="space xs" />
+				                {{ comment_form }}
+				            </div>
+			            </div>
+		            </div>
+		         </div>
+	          {% endif %}
+	      
+	
+{% endif %}

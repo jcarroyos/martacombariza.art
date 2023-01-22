@@ -1,0 +1,42 @@
+saha-lib:
+  version: VERSION
+  css:
+    theme:
+      plugins/bootstrap/css/bootstrap.css: {}
+      style.css: {}
+      css/content-box.css: {}
+      css/image-box.css: {}
+      css/animations.css: {}
+      css/components.css: {}
+      plugins/flexslider/flexslider.css: {}
+      plugins/magnific-popup.css: {}
+      css/update.css: {}
+      plugins/font-awesome/css/font-awesome.min.css: {}
+      
+  js:
+    script.js: { attributes: { async: false }}
+    plugins/bootstrap/js/bootstrap.min.js: { attributes: { async: true }}
+    plugins/imagesloaded.min.js: { attributes: { async: false }}
+    plugins/isotope.min.js: {attributes: { async: false }}
+    plugins/flexslider/jquery.flexslider-min.js: { attributes: { async: false }}
+    plugins/jquery.progress-counter.js: { attributes: { async: true }}
+    plugins/jquery.magnific-popup.min.js: { attributes: { async: true }}
+    plugins/jquery.tab-accordion.js: { attributes: { async: true }}
+    plugins/bootstrap/js/bootstrap.popover.min.js: { attributes: { async: true }}
+    plugins/jquery.spritely.min.js: { attributes: { async: false }}
+    plugins/google.maps.min.js: { attributes: { async: false }}
+    https://maps.googleapis.com/maps/api/js?sensor=false: { attributes: { async: false }}
+    plugins/jquery.twbsPagination.min.js: { attributes: { async: false }}
+    plugins/jquery.tab-accordion.js: { attributes: { async: false }}
+    plugins/parallax.min.js: {attributes: { async: false }}
+    plugins/update.js: {attributes: { async: false }}
+  dependencies:
+    - core/jquery
+
+saha-fullpage:
+  version: VERSION
+  css:
+    theme:
+      plugins/jquery.fullPage.css: {}
+  js:
+    plugins/jquery.fullPage.min.js: {attributes: { async: false }}

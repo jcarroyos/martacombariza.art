@@ -1,0 +1,43 @@
+{% include theme_path ~ "/templates/header.html.twig" %}
+
+{% set term_machine_name = current_term.vid.value.0.target_id %}
+
+    {% if term_machine_name == 'album'%}
+   
+            {% if page.content %}
+                <div class="section-empty">
+                    <div class="album-main" data-album-anima="fade-bottom">
+                        <div class="cont-album-box">
+                            <div class="">
+                                <div class="maso-list gallery" data-trigger="manual">
+                                    <div class="maso-box row no-margins" data-options="anima:fade-in">
+                                        {{ page.content }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %} 
+
+    {% else %}
+        {% include theme_path ~ "/templates/page-header.html.twig" %} 
+           {% if page.content %}
+                <div  class="section-lg m-top8 m-bottom8 p-110-cont">
+                    <div class="container content">
+                       <div class="row">
+                            {{ page.content }}
+                        </div>
+                    </div>
+                </div>
+            {% endif %} 
+
+    {% endif %}
+
+{% if page.section %}
+    {{ page.section }}
+{% endif %}
+
+
+    {% include theme_path ~ "/templates/footer.html.twig" %}

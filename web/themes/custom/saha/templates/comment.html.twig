@@ -1,0 +1,12 @@
+
+<div class="item row">
+   {% if user_picture %}
+       {{ user_picture }}
+   {% endif %} 
+   <div class="col-md-10">
+     <div>
+	      <p class="name">{{ author }} <span> {{created}} </span></p> {{ content.links }}
+	  </div>
+      {{ content.comment_body }}
+   </div>
+</div>

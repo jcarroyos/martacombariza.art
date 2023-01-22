@@ -1,0 +1,20 @@
+ 
+<div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+      <h2 class="heading">{{ label }} </h2>
+      {% endif %}
+      {{ title_suffix }}
+      <div class="container content">
+            <div class="row">
+                <div class="col-md-6">
+                     {% if content %}
+                      {{ content }}
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{contact_info}}
+                </div>
+            </div>
+      </div>    
+</div>

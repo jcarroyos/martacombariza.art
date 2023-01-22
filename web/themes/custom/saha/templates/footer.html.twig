@@ -1,0 +1,23 @@
+{% if not full_page %} 
+    <footer class="wide-area">
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 footer-left">
+                        <p>{{copyright_text|t}}</p>
+                    </div>
+                    <div class="col-md-6 footer-right">
+                        <span>{{contact_phone|t}}</span>
+                        <span class="space"></span>
+                        <div class="btn-group navbar-social">
+                            <div class="btn-group social-group">
+                                {{social_network|t}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+{% endif %}

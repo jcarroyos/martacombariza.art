@@ -1,0 +1,50 @@
+{% set oneimageURL = file_url(node.field_page_header_image.0.entity.uri.value) %}
+  
+{% include theme_path ~ "/templates/header.html.twig" %}
+
+<div class="background-page" style="background-image:url({{oneimageURL}})">
+        <div class="bg-overlay transparent-dark"></div>
+    </div>
+    <div class="overlay-content">
+        <div class="container content text-center white box-middle-container full-screen-size" data-sub-height="149">
+            <div class="box-middle">
+
+                {% if page.logo %}
+                    <div class = 'logo-center'>
+                        {{page.logo}}
+                    </div>
+                {% endif %}
+
+                <hr class="space" />
+                <h1 style="letter-spacing:4px">{{title}}</h1>
+                <div class="icon-box icon-box-top-bottom col-center">
+                    <div class="icon-box-cell">
+
+                        <p class="countdown text-s" data-time="{{node.field_date.0.value}}" data-utc-offset="-5">
+                            <span class="days countdown-values text-m">00</span><span class="countdown-label"> Days</span>
+                            <span class="hours countdown-values text-m">00</span><span class="countdown-label"> Hours</span>
+                            <span class="minutes countdown-values text-m">00</span><span class="countdown-label"> Minutes</span>
+                            <span class="seconds countdown-values text-m">00</span><span class="countdown-label"> Seconds</span>
+                        </p>
+
+                    </div>
+                </div>
+                <hr class="d" />
+                
+                    {% if page.content %}
+                         {{ page.content }}
+                     {% endif %}
+                    
+                
+            </div>
+        </div>
+    </div>
+             
+
+         <!-- /.we-are-layout1 -->
+             {% if page.section %}
+                 {{ page.section }}
+             {% endif %}
+             
+{#% include theme_path ~ "/templates/footer.html.twig" %#}
+        
