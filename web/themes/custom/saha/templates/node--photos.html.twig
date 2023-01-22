@@ -1,0 +1,31 @@
+{# 
+blog layout: stander, grid, mansory
+post single: single style1, single style2. #}
+
+{% set imageoneURL = file_url(node.field_image.0.entity.uri.value) %}
+{% set post_format = node.field_post_format.0.value %}
+{% set length_image = node.field_image|length %}
+
+{% if not page %}
+    
+   
+    {% block nodeheader %}
+        {% set length_image = length_image - 1 %}
+	    {% for i in 0..length_image %}
+	     	
+	     	{% set uri_img = node.field_image[i].entity.uri.value %}
+		    <div data-sort="15" class=" col-md-4 row-15 cat2 cat3">
+		    	
+				   <a class="img-box i-center" href="{{file_url(uri_img)}}" data-anima="show-scale" data-trigger="hover" data-anima-out="hide">
+					   <i class="fa fa-photo anima"></i>
+					   {{content.field_image[i]}}
+				   </a>
+			 
+			</div>
+		{% endfor %}
+    {% endblock %}
+        
+{% else %}{# single #}
+{{content}}
+     
+{% endif %}

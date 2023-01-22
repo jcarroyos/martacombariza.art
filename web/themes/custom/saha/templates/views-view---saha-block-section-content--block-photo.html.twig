@@ -1,0 +1,19 @@
+<div class="container content">
+    <div class="row">
+    	{% if header %}
+	        <div class="col-md-6">
+	        	{{header}}
+	        </div>
+	    {% endif %}
+	    {% if rows %}
+	        <div class="col-md-6" data-anima="show-scale">
+	        	<div class="grid-list gallery">
+	        		<div class="grid-box row" data-lightbox-anima="show-scale">
+	        			{{ rows }}
+	        		</div>
+	        		{{footer }}
+	        	</div>
+	        </div>
+	    {% endif %}
+    </div>
+</div>

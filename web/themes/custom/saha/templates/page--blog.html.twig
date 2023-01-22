@@ -1,0 +1,69 @@
+
+{% include theme_path ~ "/templates/header.html.twig" %}
+{% if hide_blog_page_header  %}
+{% else %}
+	<div class="header-title white ken-burn" data-parallax="scroll" data-position="top" data-natural-height="550" data-natural-width="1366" data-image-src="{{blog_bg_image_path}}">
+	   <div class="container">
+	      <div class="title-base">
+	         <hr class="anima" />
+	         <h1>{{ title }}</h1>
+	         <p>{{blog_subtitle}}</p>
+	      </div>
+	   </div>
+	</div>
+{% endif %}
+   
+{% set sidebar = blog_sidebar %}
+    <div class="section-empty">
+    	<div class="container content">
+    		<div class="row">
+
+			    {% if sidebar == 'left' %}
+
+			    	<div class="col-md-3 widget">
+					    {% if page.sidebar %}
+					        {{ page.sidebar }}
+					    {% endif %}			    		
+			    	</div>
+			    	<div class="col-md-9 widget">
+					    {% if page.content %}
+					        {{ page.content }}
+					    {% endif %}
+			    	</div>
+
+			    {% elseif sidebar == 'right' %}
+
+			    	<div class="col-md-9 widget">
+					    {% if page.content %}
+					        {{ page.content }}
+					    {% endif %}			    		
+			    	</div>
+			    	<div class="col-md-3 widget">
+					    {% if page.sidebar %}
+					        {{ page.sidebar }}
+					    {% endif %}			    		
+			    	</div>
+
+			    {% else %}
+
+			    	<div class="col-md-2"></div>
+			    	<div class="col-md-8">
+					    {% if page.content %}
+					        {{ page.content }}
+					    {% endif %}			    		
+			    	</div>
+
+			    {% endif %}
+
+			</div>
+		</div>
+	</div>
+
+
+    {% if page.section %}
+        {{ page.section }}
+    {% endif %}
+
+
+{% include theme_path ~ "/templates/footer.html.twig" %}
+        

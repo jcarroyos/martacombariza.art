@@ -1,0 +1,17 @@
+{
+    "name": "drupal/image_raw_formatter",
+    "description": "Provides image raw formatter for image fields.",
+    "authors": [
+        {
+            "name": "enzo - Eduardo Garcia",
+            "email": "enzo@enzolutions.com"
+        }
+    ],
+    "maintainers": [
+        {
+            "name": "George Anderson (geoanders)",
+            "email": "geo.anders@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

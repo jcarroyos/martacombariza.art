@@ -1,0 +1,41 @@
+
+{% if region == 'section' %}
+    <div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+        <div class="container">
+          <div class="row col-md-12 text-center">
+             <h2 class="heading">{{ label }} </h2>
+             
+          </div>
+        </div>
+      {% endif %}
+      {{ title_suffix }}
+      {% if content %}
+        {{ content }}
+      {% endif %}
+    </div>
+{% elseif region == 'sidebar' %}
+    <div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+        <p class="list-group-item active">{{ label }} </p>
+      {% endif %}
+      {{ title_suffix }}
+      {% if content %}
+        {{ content }}
+      {% endif %}
+    </div>
+
+{% else %}
+    <div{{ attributes }}>
+      {{ title_prefix }}
+      {% if label %}
+        <h3{{ title_attributes }}>{{ label }}</h3>
+      {% endif %}
+      {{ title_suffix }}
+      {% if content %}
+        {{ content }}
+      {% endif %}
+    </div>
+{% endif %}

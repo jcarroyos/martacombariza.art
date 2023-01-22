@@ -1,0 +1,12 @@
+<div class="container content">
+   {% if header %}
+   {{ header }}
+   {% endif %}
+   <div class="flexslider carousel outer-navs visible-dir-nav" data-options="numItems:3,itemMargin:10,minWidth:250">
+      <ul class="slides">
+         {% if rows %}
+            {{ rows }}
+         {% endif %}
+      </ul>
+   </div>
+</div>

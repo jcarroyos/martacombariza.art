@@ -1,0 +1,13 @@
+{% set imageURL = file_url(node.field_slider_image.0.entity.uri.value) %}
+{% set subtitle = node.field_subtitle.0.value %}
+
+<div class="section overlay-container" style="background-image:url('{{imageURL}}');">
+                <div class="bottom-area text-center" data-fullpage-anima="fade-bottom" data-timeline="asc" data-time="1500" data-timeline-time="500">
+                	{{content.body}}
+                    
+                    <h2 class="anima">{{subtitle}}</h2>
+                    {% if node.field_button_link.0.uri %} 
+	                    <span class="anima anima-fade-left"><a href="{{node.field_button_link.0.uri}}" class="anima-button circle-button btn btn-sm"><i class="fa fa-long-arrow-right"></i>{{content.field_button_link['#title']}}</a></span>
+	                {% endif %}
+                </div>
+            </div>

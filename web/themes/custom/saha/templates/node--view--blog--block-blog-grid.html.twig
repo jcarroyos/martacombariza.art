@@ -1,0 +1,32 @@
+{% set imageoneURL = file_url(node.field_image.0.entity.uri.value) %}
+{% set imagealt = node.field_image.0.alt %}
+<div class="grid-item col-md-3">
+   <div class="advs-box advs-box-top-icon-img niche-box-post boxed-inverse" data-anima="scale-rotate" data-trigger="hover">
+      <div class="block-infos">
+         <div class="block-data">
+            <p class="bd-day">{{ node.created.value|date('d') }}</p>
+            <p class="bd-month">{{ node.created.value|date('M Y') }}</p>
+         </div>
+         <div class="block-comment">{{ node.field_blog_comments.comment_count }} <i class="fa fa-comment-o"></i></div>
+      </div>
+      <a class="img-box" href="{{url}}"><img alt="{{imagealt}}" class="anima" src="{{imageoneURL}}" /></a>
+      <div class="advs-box-content">
+         <h2><a href="{{url}}">{{node.getTitle}}</a></h2>
+         <div class="tag-row">
+            <span><i class="fa fa-bookmark"></i> {{content.field_blog_tags}} </span>
+            <span><i class="fa fa-pencil"></i>{% if full_name %}{{ full_name }}{% else %}{{ author_name }}{% endif %}</span>
+            <div class="social-group-button">
+               <div class="social-button" data-anima="pulse-vertical" data-trigger="hover">
+                  <i class="fa fa-share-alt"></i>
+               </div>
+                          {{social_network_post|t}}
+               
+            </div>
+         </div>
+         <p class="niche-box-content">
+            {{ node.body.summary|length > 292 ? node.body.summary|slice(0,292) ~ '...' : node.body.summary }}
+         </p>
+         <a class="anima-button circle-button btn-sm" href="{{url}}"><i class="fa fa-long-arrow-right"></i>{{'Read more ...'|t}} </a>
+      </div>
+   </div>
+</div>

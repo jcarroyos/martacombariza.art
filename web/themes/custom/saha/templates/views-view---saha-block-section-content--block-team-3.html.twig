@@ -1,0 +1,15 @@
+<div class="container">
+	{% if header %}
+		{{ header }}
+	{% endif %}
+	<hr class="space s" />
+
+	{% if rows %}
+		<div class="flexslider carousel outer-navs" data-options="numItems:4,minWidth:250,itemMargin:20">
+			<ul class = "slides">
+		   		 {{ rows }}
+			</ul>
+		</div>
+		
+	{% endif %}
+</div>

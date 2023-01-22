@@ -1,0 +1,164 @@
+
+{% if id == '_saha_portfolio' %}
+
+
+
+
+   {% set layout = por_layout %}
+
+    {% if layout == 'full_width' %}
+        {% set container = '' %}
+        {% set margins = 'no-margins' %}
+    {% elseif layout == 'boxed' %}
+        {% set container = 'container' %}
+        {% set margins = 'no-margins' %}
+    {% elseif layout == 'gut_boxed' %}
+        {% set container = 'container' %}
+        {% set margins = 'margins' %}
+    {% elseif layout == 'gut_full_width' %}
+        {% set container = '' %}
+        {% set margins = '' %}
+    {% else %}
+        {% set container = '' %}
+        {% set margins = '' %}
+    {% endif %}
+
+    {% if por_style == 'portfolio2' or  por_style == 'portfolio3' %}
+        {% set gallery = 'gallery' %}
+    {% else %}
+        {% set gallery = '' %}
+    {% endif %}
+    <div class="section-empty">
+        <div class="{{ container }} content">
+            <div{{ attributes }}>
+                {{ title_prefix }}
+                {{ title }}
+                {{ title_suffix }}
+                <div class="maso-list {{gallery}}">
+                    {% if header %}     
+                        {{ header }}
+                    {% endif %}
+
+                    {{ exposed }}
+                    {{ attachment_before }}
+                    
+                   
+                    {% if rows %}  
+                    <div class="maso-box row {{margins}}" data-lightbox-anima="fade-top">
+                        
+                        {{ rows }}
+                       
+                    </div>
+                    {% endif %}
+                    {% if footer %}
+                        {{ footer }}
+                    {% endif %}
+                </div>
+                {% if pager %}
+                <div class="paginations">
+                    {{ pager }}
+                </div>
+                {% endif %}
+                {{ attachment_after }}
+                {{ more }}
+
+                {{ feed_icons }}
+            </div>
+        </div>
+    </div>
+{% elseif  id == '_saha_block_section_content' %}
+    {% if display_id == 'block_services_grid_list' or display_id == 'block_services_grid_list_2'%}
+        <div class="container content">
+           {% if header %}
+           {{ header }}
+           {% endif %}
+           <div class="grid-list columns-list">
+              <div class="grid-box row column-3-grid">
+                 {% if rows %}
+                    {{ rows }}
+                 {% endif %}
+                 <div class="clear"></div>
+                
+              </div>
+           </div>
+        </div>
+    {% elseif display_id == 'block_certifications'%}
+        <div{{ attributes.addClass('row column-3-grid') }}>
+            {% if header %}
+            {{ header }}
+            {% endif %}
+            {% if rows %}
+                {{ rows }}
+            {% endif %}
+        </div>
+
+    {% else %}
+        {% set classes = 'container' %}
+            
+        <div{{ attributes.addClass(classes) }}>
+            <div class='row'>
+                {{ title }}
+
+                
+                 {% if header %}     
+                    {{ header }}
+                 {% endif %}
+                    {{ attachment_before }}
+                    {% if rows %}  
+                        
+                            {{ rows }}
+                        
+                    {% endif %}
+                    {% if footer %}
+                        {{ footer }}
+                    {% endif %}
+                    {% if pager %}
+                    <div class="paginations">
+                        {{ pager }}
+                    </div>
+                    {% endif %}
+                    {{ attachment_after }}
+                    {{ more }}
+
+                    {{ feed_icons }}
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+
+    {%
+      set classes = [
+        dom_id ? 'js-view-dom-id-' ~ dom_id,
+      ]
+    %}
+      {{ exposed }}
+        
+    <div{{ attributes.addClass(classes) }}>
+        {{ title_prefix }}
+        {{ title }}
+        {{ title_suffix }}
+        
+     {% if header %}     
+        {{ header }}
+     {% endif %}
+        {{ attachment_before }}
+        {% if rows %}  
+            
+                {{ rows }}
+            
+        {% endif %}
+        {% if footer %}
+            {{ footer }}
+        {% endif %}
+        {% if pager %}
+        <div class="paginations">
+            {{ pager }}
+        </div>
+        {% endif %}
+        {{ attachment_after }}
+        {{ more }}
+
+        {{ feed_icons }}
+    </div>
+{% endif %}

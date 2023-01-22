@@ -1,0 +1,75 @@
+
+{% set sidebar = node.field_page_sidebar.0 .value %}
+{% include theme_path ~ "/templates/header.html.twig" %}
+{% include theme_path ~ "/templates/page-header.html.twig" %} 
+            <!-- Start Content Region --> 
+
+{% if type!= 'page'%}
+
+
+    {% if page.content %}
+        <div>
+            <div class="container content">
+                {{ page.content }}
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+    
+    {% if sidebar == 'left' %}
+        <div class="section-empty">
+            <div class="container content">
+                <div class="row">
+                    {%  if page.sidebar %}
+                        <div class="col-md-3">
+                            {{page.sidebar}}
+                        </div>
+                    {% endif %}
+                    {% if page.content %}
+                        <div class="col-md-9">
+                            {{ page.content }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    {% elseif sidebar == 'right' %}
+         <div class="section-empty">
+            <div class="container content">
+                <div class="row">
+                    
+                    {% if page.content %}
+                        <div class="col-md-9">
+                            {{ page.content }}
+                        </div>
+                    {% endif %}
+                    {%  if page.sidebar %}
+                        <div class="col-md-3">
+                            {{page.sidebar}}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+
+    {% else %}
+        {% if page.content %}
+            {{ page.content }}
+        {% endif %}
+    {% endif %}
+
+
+{% endif %}
+<!-- Start Content Region --> 
+
+<!-- Start Section Region --> 
+{% if page.section %}
+    {{ page.section }}
+{% endif %}
+<!-- Start Section Region --> 
+             
+{% include theme_path ~ "/templates/footer.html.twig" %}
+        
